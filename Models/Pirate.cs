@@ -9,6 +9,6 @@ public class Pirate
     public string Nationality { get; set; }
     public string Rank { get; set; }
     public string Ship { get; set; }
-    public string ImageUrl { get; set; }
+    public string? ImageUrl { get; set; }
 
 }
