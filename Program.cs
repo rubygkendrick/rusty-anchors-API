@@ -1,4 +1,5 @@
 using RustyAnchorsApi.Models;
+using RustyAnchorsApi.Models.DTOS;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -14,13 +16,19 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(options =>
+                {
+                    options.AllowAnyOrigin();
+                    options.AllowAnyMethod();
+                    options.AllowAnyHeader();
+                });
 }
 
 app.UseHttpsRedirection();
 
 List<Pirate> pirates = new List<Pirate>
 {
-    new Pirate
+    new Pirate()
     {
         Id = 1,
         Name = "Blackbeard",
@@ -30,7 +38,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "Queen Anne's Revenge",
         ImageUrl = "https://photos1.blogger.com/blogger/5580/2256/1600/pirate-profile.0.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Id = 2,
         Name = "Anne Bonny",
@@ -40,7 +48,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "Ranger",
         ImageUrl = "https://example.com/anne-bonny.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Id = 3,
         Name = "Calico Jack",
@@ -50,7 +58,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "The Revenge",
         ImageUrl = "https://i.pinimg.com/736x/05/29/84/052984797e028fc5526ec780d80e93d7.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Id = 4,
         Name = "Captain Kidd",
@@ -60,7 +68,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "Adventure Galley",
         ImageUrl = "https://example.com/captain-kidd.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Id = 5,
         Name = "Charles Vane",
@@ -70,7 +78,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "Ranger",
         ImageUrl = "https://avatarfiles.alphacoders.com/217/217786.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Id = 6,
         Name = "Edward England",
@@ -80,7 +88,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "Pearl",
         ImageUrl = "https://example.com/edward-england.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Id = 7,
         Name = "Edward Teach",
@@ -90,7 +98,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "Queen Anne's Revenge",
         ImageUrl = "https://example.com/edward-teach.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Id = 8,
         Name = "Henry Avery",
@@ -100,7 +108,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "Fancy",
         ImageUrl = "https://example.com/henry-avery.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Id = 9,
         Name = "Henry Morgan",
@@ -110,7 +118,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "Satisfaction",
         ImageUrl = "https://example.com/henry-morgan.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Id = 10,
         Name = "Jack Rackham",
@@ -120,7 +128,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "The Revenge",
         ImageUrl = "https://example.com/jack-rackham.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Id = 50,
         Name = "Mary Read",
@@ -130,7 +138,7 @@ List<Pirate> pirates = new List<Pirate>
         Ship = "Ranger",
         ImageUrl = "https://i.pinimg.com/originals/b7/c1/f1/b7c1f161dd713ec132b88d5350357030.jpg"
     },
-    new Pirate
+    new Pirate()
     {
         Name = "John Drake",
         Rank = "Buccaneer",
@@ -141,7 +149,7 @@ List<Pirate> pirates = new List<Pirate>
 
 List<Story> stories = new List<Story>
 {
-    new Story
+    new Story()
     {
         Id = 2,
         PirateId = 8,
@@ -149,7 +157,7 @@ List<Story> stories = new List<Story>
         Content = "The crew of the merchant ship Mary Celeste were found mysteriously missing, leaving the ship and its valuable cargo untouched. It's been said that the ship still sails the seas, haunting those who cross its path.",
         Date = new DateTime(1718, 9, 1)
     },
-    new Story
+    new Story()
     {
         Id = 3,
         PirateId = 3,
@@ -157,7 +165,7 @@ List<Story> stories = new List<Story>
         Content = "The Kraken, a massive sea monster, has been the subject of many pirate tales. Its tentacles can stretch for miles and it can easily capsize even the largest ships. Many pirates have met their end at the hands of this fearsome creature.",
         Date = new DateTime(1718, 11, 22)
     },
-    new Story
+    new Story()
     {
         Id = 149,
         PirateId = 50,
@@ -165,7 +173,7 @@ List<Story> stories = new List<Story>
         Content = "Legend had it that the Flying Dutchman was cursed to sail the seas forever, its crew doomed to an eternal existence as undead pirates. But when a group of adventurers stumbled upon the ship one stormy night, they found that the curse was all too real. Now they must find a way to break the curse before it's too late.",
         Date = new DateTime(1722, 10, 15)
     },
-    new Story
+    new Story()
     {
         Id = 56,
         Title = "The Battle of Blackbeard's Bay",
@@ -173,7 +181,7 @@ List<Story> stories = new List<Story>
         PirateId = 2,
         Date = new DateTime(1718, 9, 1)
     },
-    new Story
+    new Story()
     {
         Id = 57,
         Title = "The Curse of the Kraken",
@@ -181,7 +189,7 @@ List<Story> stories = new List<Story>
         PirateId = 5,
         Date = new DateTime(1718, 9, 1)
     },
-    new Story
+    new Story()
     {
         Id = 58,
         Title = "The Treasure of Captain Kidd",
@@ -189,7 +197,7 @@ List<Story> stories = new List<Story>
         PirateId = 3,
         Date = new DateTime(1725, 5, 30)
     },
-    new Story
+    new Story()
     {
         Id = 59,
         Title = "The Betrayal of Black Bart",
@@ -197,7 +205,7 @@ List<Story> stories = new List<Story>
         PirateId = 4,
         Date = new DateTime(1722, 6, 22)
     },
-    new Story
+    new Story()
     {
         Id = 60,
         Title = "The Revenge of Calico Jack",
@@ -209,21 +217,66 @@ List<Story> stories = new List<Story>
 
 List<Follower> followers = new List<Follower>
 {
-    new Follower { Id = 1, PirateId = 1, FollowerId = 2 },
-    new Follower { Id = 2, PirateId = 1, FollowerId = 3 },
-    new Follower { Id = 3, PirateId = 2, FollowerId = 1 },
-    new Follower { Id = 4, PirateId = 2, FollowerId = 3 },
-    new Follower { Id = 5, PirateId = 3, FollowerId = 1 },
-    new Follower { Id = 6, PirateId = 3, FollowerId = 2 },
-    new Follower { Id = 7, PirateId = 50, FollowerId = 2 },
-    new Follower { Id = 8, PirateId = 50, FollowerId = 3 },
-    new Follower { Id = 9, PirateId = 1, FollowerId = 1 },
-    new Follower { Id = 10, PirateId = 1, FollowerId = 1 },
-    new Follower { Id = 13, PirateId = 50, FollowerId = 5 },
-    new Follower { Id = 14, PirateId = 7, FollowerId = 5 }
+    new Follower ()
+    { Id = 1, PirateId = 1, FollowerId = 2 },
+    new Follower ()
+    { Id = 2, PirateId = 1, FollowerId = 3 },
+    new Follower ()
+    { Id = 3, PirateId = 2, FollowerId = 1 },
+    new Follower ()
+    { Id = 4, PirateId = 2, FollowerId = 3 },
+    new Follower ()
+    { Id = 5, PirateId = 3, FollowerId = 1 },
+    new Follower ()
+    { Id = 6, PirateId = 3, FollowerId = 2 },
+    new Follower ()
+    { Id = 7, PirateId = 50, FollowerId = 2 },
+    new Follower ()
+    { Id = 8, PirateId = 50, FollowerId = 3 },
+    new Follower ()
+    { Id = 9, PirateId = 1, FollowerId = 1 },
+    new Follower ()
+    { Id = 10, PirateId = 1, FollowerId = 1 },
+    new Follower ()
+    { Id = 13, PirateId = 50, FollowerId = 5 },
+    new Follower ()
+    { Id = 14, PirateId = 7, FollowerId = 5 }
 };
 
+app.MapGet("/pirates/{name}/{shipName}", (string name, string shipName) =>
+{
+    List<Pirate> foundPirates = pirates.Where(p => p.Name == name && p.Ship == shipName).ToList();
 
+    if(foundPirates.Count == 0)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(foundPirates.Select(p => new PirateDTO
+    {
+        Id = p.Id,
+        Name = p.Name,
+        Age = p.Age,
+        Nationality = p.Nationality,
+        Rank = p.Rank,
+        Ship = p.Ship,
+        ImageUrl = p.ImageUrl
+    }));
+});
+
+app.MapGet("/pirates", () =>
+{
+    return pirates.Select(p => new PirateDTO
+    {
+        Id = p.Id,
+        Name = p.Name,
+        Age = p.Age,
+        Nationality = p.Nationality,
+        Rank = p.Rank,
+        Ship = p.Ship,
+        ImageUrl = p.ImageUrl
+    });
+});
 
 
 
