@@ -299,7 +299,7 @@ app.MapGet("/pirates/{id}", (int id) =>
     });
 });
 
-app.MapGet("followers/{id}", (int id) =>
+app.MapGet("/followers/{id}", (int id) =>
 {
     Pirate pirateWithFollowerId = pirates.FirstOrDefault(p => p.Id == id);
 
