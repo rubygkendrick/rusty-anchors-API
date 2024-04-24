@@ -276,7 +276,8 @@ app.MapGet("/pirates", () =>
         Ship = p.Ship,
         ImageUrl = p.ImageUrl
     });
-})
+});
+
 app.MapGet("/followers/{followerId}/{pirateId}", (int followerId , int pirateId) =>
 {
     Follower follower = followers.FirstOrDefault(f => f.Id == followerId && f.PirateId == pirateId);
