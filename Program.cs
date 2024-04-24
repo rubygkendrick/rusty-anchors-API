@@ -363,14 +363,29 @@ app.MapGet("/followers/{id}", (int id) =>
 
 app.MapGet("/stories", () =>
 {
-    return stories.Select(s => new StoryDTO
+    return stories.Select(s =>
     {
-        Id = s.Id,
-        PirateId = s.PirateId,
-        Title = s.Title,
-        Content = s.Content,
-        Date = s.Date
-    });
+        Pirate matchedPirate = pirates.FirstOrDefault(p => p.Id == s.PirateId);
+        return new StoryDTO
+        {
+            Id = s.Id,
+            PirateId = s.PirateId,
+            Title = s.Title,
+            Content = s.Content,
+            Date = s.Date,
+            Pirate = matchedPirate != null
+                     ? new PirateDTO
+                     {
+                         Name = matchedPirate.Name,
+                         Age = matchedPirate.Age,
+                         Nationality = matchedPirate.Nationality,
+                         Rank = matchedPirate.Rank,
+                         Ship = matchedPirate.Ship,
+                         ImageUrl = matchedPirate.ImageUrl
+                     }
+                    : null
+        };
+    });  
 });
 
 
