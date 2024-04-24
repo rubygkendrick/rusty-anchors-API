@@ -7,4 +7,5 @@ public class StoryDTO
     public string Title { get; set; }
     public string Content { get; set; }
     public DateTime Date { get; set; }
+    public PirateDTO? Pirate { get; set; }
 }
