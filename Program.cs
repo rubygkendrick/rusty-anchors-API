@@ -325,6 +325,42 @@ app.MapGet("/pirates/{id}", (int id) =>
     });
 });
 
+
+app.MapGet("/followers/{id}", (int id) =>
+{
+    Pirate pirateWithFollowerId = pirates.FirstOrDefault(p => p.Id == id);
+
+    if (pirateWithFollowerId == null)
+    {
+        return Results.NotFound();
+    }
+    List<Follower> favoritePirates = followers.Where(f => f.FollowerId == pirateWithFollowerId.Id).ToList();
+
+
+    return Results.Ok(favoritePirates.Select(p =>
+    {
+        Pirate matchedPirate = pirates.FirstOrDefault(pr => pr.Id == p.PirateId);
+        return new FollowerDTO
+        {
+            Id = p.Id,
+            PirateId = p.PirateId,
+            FollowerId = p.FollowerId,
+            Pirate = matchedPirate != null
+                     ? new PirateDTO
+                     {
+                         Name = matchedPirate.Name,
+                         Age = matchedPirate.Age,
+                         Nationality = matchedPirate.Nationality,
+                         Rank = matchedPirate.Rank,
+                         Ship = matchedPirate.Ship,
+                         ImageUrl = matchedPirate.ImageUrl
+                     }
+                    : null
+        };
+    }));
+});
+
+
 app.MapGet("/stories", () =>
 {
     return stories.Select(s => new StoryDTO
