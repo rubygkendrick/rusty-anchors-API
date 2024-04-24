@@ -278,6 +278,32 @@ app.MapGet("/pirates", () =>
     });
 });
 
+app.MapGet("/followers/{followerId}/{pirateId}", (int followerId , int pirateId) =>
+{
+    Follower follower = followers.FirstOrDefault(f => f.Id == followerId && f.PirateId == pirateId);
+    if(follower == null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Ok(new FollowerDTO
+    {
+        Id = follower.Id,
+        PirateId = follower.PirateId,
+        FollowerId = follower.FollowerId
+    });
+});
+
+app.MapDelete("/followers/{matchId}", (int matchId) =>
+{
+    Follower follower = followers.FirstOrDefault(f => f.Id == matchId);
+    if(follower == null)
+    {
+        return Results.NotFound();
+    }
+    followers.Remove(follower);
+    return Results.NoContent();
+});
+
 app.MapGet("/pirates/{id}", (int id) =>
 {
     Pirate pirate = pirates.FirstOrDefault(p => p.Id == id);
@@ -298,6 +324,7 @@ app.MapGet("/pirates/{id}", (int id) =>
         ImageUrl = pirate.ImageUrl
     });
 });
+
 
 app.MapGet("/followers/{id}", (int id) =>
 {
@@ -333,6 +360,18 @@ app.MapGet("/followers/{id}", (int id) =>
     }));
 });
 
+
+app.MapGet("/stories", () =>
+{
+    return stories.Select(s => new StoryDTO
+    {
+        Id = s.Id,
+        PirateId = s.PirateId,
+        Title = s.Title,
+        Content = s.Content,
+        Date = s.Date
+    });
+});
 
 
 app.Run();
