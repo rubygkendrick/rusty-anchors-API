@@ -247,7 +247,7 @@ app.MapGet("/pirates/{name}/{shipName}", (string name, string shipName) =>
 {
     List<Pirate> foundPirates = pirates.Where(p => p.Name == name && p.Ship == shipName).ToList();
 
-    if(foundPirates.Count == 0)
+    if (foundPirates.Count == 0)
     {
         return Results.NotFound();
     }
@@ -276,8 +276,7 @@ app.MapGet("/pirates", () =>
         Ship = p.Ship,
         ImageUrl = p.ImageUrl
     });
-});
-
+})
 app.MapGet("/followers/{followerId}/{pirateId}", (int followerId , int pirateId) =>
 {
     Follower follower = followers.FirstOrDefault(f => f.Id == followerId && f.PirateId == pirateId);
@@ -304,8 +303,38 @@ app.MapDelete("/followers/{matchId}", (int matchId) =>
     return Results.NoContent();
 });
 
+app.MapGet("/pirates/{id}", (int id) =>
+{
+    Pirate pirate = pirates.FirstOrDefault(p => p.Id == id);
 
+    if (pirate == null)
+    {
+        return Results.NotFound();
+    }
 
+    return Results.Ok(new PirateDTO
+    {
+        Id = pirate.Id,
+        Name = pirate.Name,
+        Age = pirate.Age,
+        Nationality = pirate.Nationality,
+        Rank = pirate.Rank,
+        Ship = pirate.Ship,
+        ImageUrl = pirate.ImageUrl
+    });
+});
+
+app.MapGet("/stories", () =>
+{
+    return stories.Select(s => new StoryDTO
+    {
+        Id = s.Id,
+        PirateId = s.PirateId,
+        Title = s.Title,
+        Content = s.Content,
+        Date = s.Date
+    });
+});
 
 
 app.Run();
