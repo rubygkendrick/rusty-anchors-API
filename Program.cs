@@ -299,8 +299,17 @@ app.MapGet("/pirates/{id}", (int id) =>
     });
 });
 
-
-
+app.MapGet("/stories", () =>
+{
+    return stories.Select(s => new StoryDTO
+    {
+        Id = s.Id,
+        PirateId = s.PirateId,
+        Title = s.Title,
+        Content = s.Content,
+        Date = s.Date
+    });
+});
 
 
 app.Run();
