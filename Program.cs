@@ -278,6 +278,31 @@ app.MapGet("/pirates", () =>
     });
 });
 
+app.MapGet("/followers/{followerId}/{pirateId}", (int followerId , int pirateId) =>
+{
+    Follower follower = followers.FirstOrDefault(f => f.Id == followerId && f.PirateId == pirateId);
+    if(follower == null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Ok(new FollowerDTO
+    {
+        Id = follower.Id,
+        PirateId = follower.PirateId,
+        FollowerId = follower.FollowerId
+    });
+});
+
+app.MapDelete("/followers/{matchId}", (int matchId) =>
+{
+    Follower follower = followers.FirstOrDefault(f => f.Id == matchId);
+    if(follower == null)
+    {
+        return Results.NotFound();
+    }
+    followers.Remove(follower);
+    return Results.NoContent();
+});
 
 
 
