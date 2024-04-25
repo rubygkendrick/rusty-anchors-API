@@ -280,7 +280,7 @@ app.MapGet("/pirates", () =>
 
 app.MapGet("/followers/{followerId}/{pirateId}", (int followerId, int pirateId) =>
 {
-    Follower follower = followers.FirstOrDefault(f => f.Id == followerId && f.PirateId == pirateId);
+    Follower follower = followers.FirstOrDefault(f => f.FollowerId == followerId && f.PirateId == pirateId);
     if (follower == null)
     {
         return Results.NotFound();
@@ -376,6 +376,7 @@ app.MapGet("/stories", () =>
             Pirate = matchedPirate != null
                      ? new PirateDTO
                      {
+                         Id = matchedPirate.Id,
                          Name = matchedPirate.Name,
                          Age = matchedPirate.Age,
                          Nationality = matchedPirate.Nationality,
@@ -388,12 +389,14 @@ app.MapGet("/stories", () =>
     });  
 });
 
-app.MapPost("/followers", (Follower follower) =>
+app.MapPost("/followers", (Follower follower)  =>
 {
     if (follower == null)
     {
         return Results.BadRequest();
     }
+    
+
     if (followers.Count == 0)
     {
         follower.Id = 1;
@@ -403,6 +406,9 @@ app.MapPost("/followers", (Follower follower) =>
 
         follower.Id = followers.Max(o => o.Id) + 1;
     }
+
+    followers.Add(follower);
+
     return Results.Created($"/followers/{follower.Id}", new FollowerDTO
     {
         Id = follower.Id,
